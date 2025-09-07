@@ -12,15 +12,15 @@
             margin: 0;
             background-color: #f0f2f5;
             min-height: 100vh;
-            padding-top: 60px; /* Header ki height ke barabar padding */
+            padding-top: 60px;
         }
-        
-        /* Header and Navigation (Updated for blue strip and dropdown) */
+
+        /* Header and Navigation */
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: 60px; /* Choti blue strip */
+            height: 60px;
             padding: 0 15px;
             background-color: #004684;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
@@ -41,33 +41,33 @@
             border-radius: 5px;
         }
         .header .left-section .logo img {
-            max-height: 50px; /* Logo ko blue strip ke andar fit karne ke liye */
+            max-height: 50px;
         }
-        .menu-icon { 
+        .menu-icon {
             color: #fff;
-            cursor: pointer; 
-            font-size: 24px; 
+            cursor: pointer;
+            font-size: 24px;
         }
-        .user-profile { 
-            display: flex; 
-            align-items: center; 
-            cursor: pointer; 
+        .user-profile {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
         }
-        .user-profile img { 
-            width: 30px; 
-            height: 30px; 
-            border-radius: 50%; 
-            margin-right: 10px; 
+        .user-profile img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 10px;
         }
         .user-profile span {
             color: #fff;
         }
-        
+
         /* Main Navigation Dropdown */
         .main-nav-dropdown {
             display: none;
             position: fixed;
-            top: 60px; /* Header ke theek niche */
+            top: 60px;
             left: 0;
             right: 0;
             background-color: #fff;
@@ -88,7 +88,7 @@
             text-decoration: none;
             color: #333;
         }
-        
+
         /* Dropdown specific styles */
         .dropdown > a { position: relative; }
         .dropdown > a::after { content: '▼'; font-size: 10px; position: absolute; right: 10px; top: 50%; transform: translateY(-50%); transition: transform 0.3s; }
@@ -96,7 +96,7 @@
         .dropdown-menu { display: none; list-style: none; padding-left: 20px; }
         .dropdown.open > .dropdown-menu { display: block; }
         .dropdown-menu li a { padding-left: 10px; }
-        
+
         /* Main Content Sections */
         .content-section { display: none; margin-top: 20px; }
         .content-section.active { display: block; }
@@ -110,7 +110,7 @@
         .dashboard-card.classes { background-color: #3498db; }
         .dashboard-card h3 { margin-top: 0; }
         .dashboard-card p { font-size: 2em; font-weight: bold; margin: 0; }
-        
+
         /* Other Pages Styling */
         table { width: 100%; border-collapse: collapse; background-color: #fff; }
         th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
@@ -119,10 +119,70 @@
         .profile-form input[type="text"] { width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
         .profile-form button { padding: 10px 20px; background-color: #3498db; color: #fff; border: none; border-radius: 5px; cursor: pointer; }
         .profile-form button:hover { opacity: 0.8; }
-        .profile-form .profile-image {
+
+        /* Profile Image and Text alignment */
+        .profile-image-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            position: relative;
+            width: 100px;
+            height: 100px;
+        }
+        .profile-image-wrapper {
+            position: relative;
             width: 100px;
             height: 100px;
             margin-bottom: 10px;
+        }
+        .profile-image {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 2px solid #ccc;
+            object-fit: cover;
+        }
+        
+        /* Profile h1 and h2 font-weight */
+        #profile h1, #profile h2 {
+            font-weight: 500;
+        }
+
+        /* Camera icon styling */
+        .upload-icon {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            cursor: pointer;
+            background-color: #3498db;
+            border-radius: 50%;
+            padding: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 30px;
+            height: 30px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transform: translate(25%, 25%);
+        }
+        .upload-icon::before {
+            content: '\f030';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            color: #fff;
+            font-size: 14px;
+        }
+        .profile-image-info {
+            font-size: 0.8em;
+            color: #888;
+            margin-top: 15px;
+        }
+        
+        /* New styling for the info text */
+        .profile-form > small {
+            display: block;
+            margin-top: 10px; /* Adjust spacing as needed */
+            color: #888;
         }
 
         /* Calendar Styles */
@@ -135,16 +195,17 @@
         .calendar-grid .date { padding: 10px; border-radius: 5px; position: relative; cursor: pointer; }
         .calendar-grid .date:hover { background-color: #f0f0f0; }
         .calendar-grid .date.today { background-color: #d1e7ff; font-weight: bold; }
-        
+
         /* Event markers on calendar */
         .calendar-legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin-top: 20px; }
         .legend-item { display: flex; align-items: center; gap: 5px; }
         .legend-marker { width: 15px; height: 15px; border-radius: 50%; }
         .event-marker { position: absolute; bottom: 3px; left: 50%; transform: translateX(-50%); width: 8px; height: 8px; border-radius: 50%; }
-        .event-marker.event, .legend-marker.event { background-color: #3498db; } /* Blue for Events */
-        .event-marker.exam, .legend-marker.exam { background-color: #e74c3c; } /* Red for Exams */
-        .event-marker.holiday, .legend-marker.holiday { background-color: #27ae60; } /* Green for Holidays */
+        .event-marker.event, .legend-marker.event { background-color: #3498db; }
+        .event-marker.exam, .legend-marker.exam { background-color: #e74c3c; }
+        .event-marker.holiday, .legend-marker.holiday { background-color: #27ae60; }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
     <header class="header">
@@ -189,11 +250,14 @@
             <p>Dashboard > Edit Profile</p>
             <div class="profile-form">
                 <h2>PERSONAL DETAILS</h2>
-                <div style="text-align: center; margin-bottom: 20px;">
-                    <img src="https://i.ibb.co/4wFB0Pn8/clientpic.jpg" alt="Profile" class="profile-image" style="border-radius: 50%; border: 2px solid #ccc;">
-                    <p><small>*Only JPEG and JPG supported. *Max 3 MB Upload</small></p>
-                    <button>Upload Image</button>
+                <div class="profile-image-container">
+                    <div class="profile-image-wrapper">
+                        <img src="https://i.ibb.co/4wFB0Pn8/clientpic.jpg" alt="Profile" class="profile-image">
+                        <span class="upload-icon"></span>
+                    </div>
                 </div>
+                <small style="color: #888; display: block; margin-top: 15px; margin-bottom: 20px;">*Only JPEG and JPG supported. *Max 3 MB Upload</small>
+                
                 <label>Gender</label><div><input type="radio" name="gender" value="male" checked> Male<input type="radio" name="gender" value="female"> Female<input type="radio" name="gender" value="other"> Other</div>
                 <label style="display: block; margin-top: 15px;">First Name</label><input type="text" value="Rupinder">
                 <label style="display: block;">Middle Name</label><input type="text">
@@ -212,7 +276,7 @@
                 <div class="dashboard-card classes"><h3>Classes</h3><p>1+</p></div>
             </div>
             <h2 style="margin-top: 40px;">ACTIVITIES CALENDAR</h2>
-            
+
             <div class="calendar-container">
                 <div class="calendar-header">
                     <button id="prev-month">&lt;</button>
@@ -231,7 +295,7 @@
                 </div>
             </div>
         </section>
-        
+
         <section class="content-section" id="session">
             <h1>Session Details</h1>
             <p>Dashboard > Enrolled Classes > MBA Advance > Session</p>
@@ -245,7 +309,6 @@
         <section class="content-section" id="subjects">
             <h1>Subjects</h1>
             <p>Dashboard > Enrolled Classes > MBA Advance > Subjects</p>
-            
             <div style="background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
                 <h3>List of Subjects</h3>
                 <ul>
@@ -259,7 +322,7 @@
                 </ul>
             </div>
         </section>
-        
+
         <section class="content-section" id="timetable">
             <h1>TIME TABLE - MBA</h1>
             <p>Dashboard > Enrolled Classes > MBA Advance > Time Table</p>
@@ -292,7 +355,7 @@
         <section class="content-section" id="events"><h1>Events</h1><p>Dashboard > Events</p><p>Content for Events page.</p></section>
         <section class="content-section" id="transport"><h1>Transport</h1><p>Dashboard > Transport</p><p>Content for Transport page.</p></section>
     </main>
-    
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const navLinks = document.querySelectorAll('.nav-link');
@@ -318,10 +381,10 @@
                     targetPage.classList.add('active');
                 }
             };
-            
+
             const handleNavLinkClick = (link) => {
                 navLinks.forEach(item => item.classList.remove('active'));
-                
+
                 let currentLink = link;
                 while (currentLink && currentLink.tagName !== 'LI') {
                     currentLink = currentLink.parentElement;
@@ -329,7 +392,7 @@
                 if (currentLink && currentLink.querySelector('a')) {
                     currentLink.querySelector('a').classList.add('active');
                 }
-                
+
                 showPage(link.getAttribute('data-page'));
                 navDropdown.classList.remove('active');
             };
@@ -337,8 +400,8 @@
             navLinks.forEach(link => {
                 link.addEventListener('click', (e) => {
                     e.preventDefault();
-                    if (link.dataset.page === 'enrolled-classes-placeholder') return; 
-                    
+                    if (link.dataset.page === 'enrolled-classes-placeholder') return;
+
                     handleNavLinkClick(link);
                 });
             });
@@ -367,19 +430,19 @@
 
                 const firstDayOfMonth = new Date(year, month, 1).getDay();
                 const lastDateOfMonth = new Date(year, month + 1, 0).getDate();
-                
+
                 const placeholderData = {
                     '8-2025': {
-                        events: [7, 14, 21], 
-                        exams: [10, 25],     
-                        holidays: [1, 15, 30]  
+                        events: [7, 14, 21],
+                        exams: [10, 25],
+                        holidays: [1, 15, 30]
                     }
                 };
                 const monthYearKey = `${month}-${year}`;
                 const eventsThisMonth = placeholderData[monthYearKey] || { events: [], exams: [], holidays: [] };
 
                 currentMonthYear.textContent = `${currentDate.toLocaleString('default', { month: 'long' })} ${year}`;
-                
+
                 calendarGrid.innerHTML = `
                     <div class="day-name">Sun</div><div class="day-name">Mon</div><div class="day-name">Tue</div>
                     <div class="day-name">Wed</div><div class="day-name">Thu</div><div class="day-name">Fri</div>
