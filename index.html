@@ -5,66 +5,89 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EduApp Dashboard</title>
     <style>
-        /* Global Styles for consistent spacing and sizing */
+        /* Global Styles */
         * { box-sizing: border-box; }
-
         body {
             font-family: sans-serif;
             margin: 0;
             background-color: #f0f2f5;
-            display: flex;
             min-height: 100vh;
+            padding-top: 60px; /* Header ki height ke barabar padding */
         }
-
-        /* Sidebar and Main Content Layout */
-        .sidebar {
-            width: 250px;
-            background-color: #fff;
-            padding: 20px;
-            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-            position: fixed;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            z-index: 1000;
-        }
-        .main-content {
-            margin-left: 250px;
-            flex-grow: 1;
-            padding: 20px;
-        }
-        @media (max-width: 768px) {
-            .sidebar {
-                width: 200px;
-                transform: translateX(-200px);
-                transition: transform 0.3s ease-in-out;
-            }
-            .sidebar.active { transform: translateX(0); }
-            .main-content { margin-left: 0; }
-            .header .menu-icon { display: block; }
-        }
-
-        /* Header and Navigation */
+        
+        /* Header and Navigation (Updated for blue strip and dropdown) */
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px;
-            background-color: #fff;
+            height: 60px; /* Choti blue strip */
+            padding: 0 15px;
+            background-color: #004684;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            position: sticky;
+            position: fixed;
             top: 0;
+            left: 0;
+            right: 0;
             z-index: 900;
         }
-        .menu-icon { display: none; cursor: pointer; font-size: 24px; }
-        .user-profile { display: flex; align-items: center; cursor: pointer; }
-        .user-profile img { width: 30px; height: 30px; border-radius: 50%; margin-right: 10px; }
-        .logo { text-align: center; margin-bottom: 20px; }
-        .logo img { width: 100px; }
-        .sidebar nav ul { list-style: none; padding: 0; }
-        .sidebar nav ul li a { display: block; padding: 10px; text-decoration: none; color: #333; border-radius: 5px; margin-bottom: 5px; font-size: 16px; }
-        .sidebar nav ul li a:hover,
-        .sidebar nav ul li a.active { background-color: #e0e2e5; }
+        .header .left-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .header .left-section .logo {
+            background-color: #fff;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        .header .left-section .logo img {
+            max-height: 50px; /* Logo ko blue strip ke andar fit karne ke liye */
+        }
+        .menu-icon { 
+            color: #fff;
+            cursor: pointer; 
+            font-size: 24px; 
+        }
+        .user-profile { 
+            display: flex; 
+            align-items: center; 
+            cursor: pointer; 
+        }
+        .user-profile img { 
+            width: 30px; 
+            height: 30px; 
+            border-radius: 50%; 
+            margin-right: 10px; 
+        }
+        .user-profile span {
+            color: #fff;
+        }
+        
+        /* Main Navigation Dropdown */
+        .main-nav-dropdown {
+            display: none;
+            position: fixed;
+            top: 60px; /* Header ke theek niche */
+            left: 0;
+            right: 0;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            z-index: 800;
+        }
+        .main-nav-dropdown.active {
+            display: block;
+        }
+        .main-nav-dropdown ul {
+            list-style: none;
+            margin: 0;
+            padding: 10px 20px;
+        }
+        .main-nav-dropdown ul li a {
+            display: block;
+            padding: 10px;
+            text-decoration: none;
+            color: #333;
+        }
         
         /* Dropdown specific styles */
         .dropdown > a { position: relative; }
@@ -77,6 +100,7 @@
         /* Main Content Sections */
         .content-section { display: none; margin-top: 20px; }
         .content-section.active { display: block; }
+        .content-section.active h1 { margin-top: 0; }
 
         /* Dashboard Cards Layout */
         .card-container { display: flex; flex-wrap: wrap; justify-content: space-around; }
@@ -95,6 +119,11 @@
         .profile-form input[type="text"] { width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
         .profile-form button { padding: 10px 20px; background-color: #3498db; color: #fff; border: none; border-radius: 5px; cursor: pointer; }
         .profile-form button:hover { opacity: 0.8; }
+        .profile-form .profile-image {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 10px;
+        }
 
         /* Calendar Styles */
         .calendar-container { background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
@@ -115,50 +144,65 @@
         .event-marker.event, .legend-marker.event { background-color: #3498db; } /* Blue for Events */
         .event-marker.exam, .legend-marker.exam { background-color: #e74c3c; } /* Red for Exams */
         .event-marker.holiday, .legend-marker.holiday { background-color: #27ae60; } /* Green for Holidays */
-
     </style>
 </head>
 <body>
-
-    <aside class="sidebar" id="sidebar">
-        <div class="logo">
-            <img src="https://www.insead.edu/profiles/custom/insead/themes/insead_core/images/logo-full.png" alt="INSEAD Logo">
+    <header class="header">
+        <div class="left-section">
+            <div class="logo">
+                <img src="https://i.ibb.co/8DVzCWY9/cropedlogo.jpg" alt="INSEAD Logo">
+            </div>
+            <span class="menu-icon" id="menu-toggle">&#9776;</span>
         </div>
-        <nav>
-            <ul>
-                <li><a href="#" class="nav-link active" data-page="dashboard">Dashboard</a></li>
-                <li class="dropdown" id="enrolled-classes-dropdown">
-                    <a href="#" class="nav-link" data-page="enrolled-classes-placeholder">Enrolled Classes</a>
-                    <ul class="dropdown-menu">
-                        <li class="dropdown open" id="mba-advance-dropdown">
-                            <a href="#">MBA Advance</a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#" class="nav-link" data-page="subjects">Subjects</a></li>
-                                <li><a href="#" class="nav-link" data-page="timetable">Time Table</a></li>
-                                <li><a href="#" class="nav-link" data-page="teacher">Teacher</a></li>
-                                <li><a href="#" class="nav-link" data-page="attendance">Attendance</a></li>
-                                <li><a href="#" class="nav-link" data-page="session">Session</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                <li><a href="#" class="nav-link" data-page="parents">Parents</a></li>
-                <li><a href="#" class="nav-link" data-page="events">Events</a></li>
-                <li><a href="#" data-page="transport">Transport</a></li>
-            </ul>
-        </nav>
-    </aside>
+        <div class="user-profile" id="profile-link">
+            <img src="https://i.ibb.co/4wFB0Pn8/clientpic.jpg" alt="User">
+        </div>
+    </header>
+
+    <nav class="main-nav-dropdown" id="main-nav-dropdown">
+        <ul>
+            <li><a href="#" class="nav-link" data-page="dashboard">Dashboard</a></li>
+            <li class="dropdown" id="enrolled-classes-dropdown">
+                <a href="#" class="nav-link" data-page="enrolled-classes-placeholder">Enrolled Classes</a>
+                <ul class="dropdown-menu">
+                    <li class="dropdown open" id="mba-advance-dropdown">
+                        <a href="#">MBA Advance</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" class="nav-link" data-page="subjects">Subjects</a></li>
+                            <li><a href="#" class="nav-link" data-page="timetable">Time Table</a></li>
+                            <li><a href="#" class="nav-link" data-page="teacher">Teacher</a></li>
+                            <li><a href="#" class="nav-link" data-page="attendance">Attendance</a></li>
+                            <li><a href="#" class="nav-link" data-page="session">Session</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li><a href="#" class="nav-link" data-page="parents">Parents</a></li>
+            <li><a href="#" class="nav-link" data-page="events">Events</a></li>
+            <li><a href="#" class="nav-link" data-page="transport">Transport</a></li>
+        </ul>
+    </nav>
 
     <main class="main-content">
-        <header class="header">
-            <span class="menu-icon" id="menu-toggle">&#9776;</span>
-            <div class="user-profile" id="profile-link">
-                <img src="https://i.ibb.co/4wFB0Pn8/clientpic.jpg" alt="User">
-                <span>Admin</span>
+        <section class="content-section active" id="profile">
+            <h1>EDIT PROFILE</h1>
+            <p>Dashboard > Edit Profile</p>
+            <div class="profile-form">
+                <h2>PERSONAL DETAILS</h2>
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <img src="https://i.ibb.co/4wFB0Pn8/clientpic.jpg" alt="Profile" class="profile-image" style="border-radius: 50%; border: 2px solid #ccc;">
+                    <p><small>*Only JPEG and JPG supported. *Max 3 MB Upload</small></p>
+                    <button>Upload Image</button>
+                </div>
+                <label>Gender</label><div><input type="radio" name="gender" value="male" checked> Male<input type="radio" name="gender" value="female"> Female<input type="radio" name="gender" value="other"> Other</div>
+                <label style="display: block; margin-top: 15px;">First Name</label><input type="text" value="Rupinder">
+                <label style="display: block;">Middle Name</label><input type="text">
+                <label style="display: block;">Last Name</label><input type="text" value="Rana">
+                <button type="submit" style="margin-top: 20px;">Update Profile</button>
             </div>
-        </header>
+        </section>
 
-        <section class="content-section active" id="dashboard">
+        <section class="content-section" id="dashboard">
             <h1>Dashboard</h1>
             <p>Home > Dashboard</p>
             <div class="card-container">
@@ -247,32 +291,15 @@
         <section class="content-section" id="parents"><h1>Parents</h1><p>Dashboard > Parents</p><p>Content for Parents page.</p></section>
         <section class="content-section" id="events"><h1>Events</h1><p>Dashboard > Events</p><p>Content for Events page.</p></section>
         <section class="content-section" id="transport"><h1>Transport</h1><p>Dashboard > Transport</p><p>Content for Transport page.</p></section>
-        <section class="content-section" id="profile">
-            <h1>EDIT PROFILE</h1>
-            <p>Dashboard > Edit Profile</p>
-            <div class="profile-form">
-                <h2>PERSONAL DETAILS</h2>
-                <div style="text-align: center; margin-bottom: 20px;">
-                    <img src="https://i.ibb.co/4wFB0Pn8/clientpic.jpg" alt="Profile" style="border-radius: 50%; border: 2px solid #ccc;">
-                    <p><small>*Only JPEG and JPG supported. *Max 3 MB Upload</small></p>
-                    <button>Upload Image</button>
-                </div>
-                <label>Gender</label><div><input type="radio" name="gender" value="male"> Male<input type="radio" name="gender" value="female"> Female<input type="radio" name="gender" value="other"> Other</div>
-                <label style="display: block; margin-top: 15px;">First Name</label><input type="text">
-                <label style="display: block;">Middle Name</label><input type="text">
-                <label style="display: block;">Last Name</label><input type="text">
-                <button type="submit" style="margin-top: 20px;">Update Profile</button>
-            </div>
-        </section>
     </main>
-
+    
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const navLinks = document.querySelectorAll('.nav-link');
             const contentSections = document.querySelectorAll('.content-section');
             const profileLink = document.getElementById('profile-link');
             const menuToggle = document.getElementById('menu-toggle');
-            const sidebar = document.getElementById('sidebar');
+            const navDropdown = document.getElementById('main-nav-dropdown');
 
             const dropdownToggles = document.querySelectorAll('.dropdown > a');
             dropdownToggles.forEach(toggle => {
@@ -291,24 +318,28 @@
                     targetPage.classList.add('active');
                 }
             };
+            
+            const handleNavLinkClick = (link) => {
+                navLinks.forEach(item => item.classList.remove('active'));
+                
+                let currentLink = link;
+                while (currentLink && currentLink.tagName !== 'LI') {
+                    currentLink = currentLink.parentElement;
+                }
+                if (currentLink && currentLink.querySelector('a')) {
+                    currentLink.querySelector('a').classList.add('active');
+                }
+                
+                showPage(link.getAttribute('data-page'));
+                navDropdown.classList.remove('active');
+            };
 
             navLinks.forEach(link => {
                 link.addEventListener('click', (e) => {
                     e.preventDefault();
                     if (link.dataset.page === 'enrolled-classes-placeholder') return; 
                     
-                    navLinks.forEach(item => item.classList.remove('active'));
-                    
-                    let currentLink = link;
-                    while (currentLink && currentLink.tagName !== 'LI' && currentLink.tagName !== 'UL') {
-                        currentLink = currentLink.parentElement;
-                    }
-                    if (currentLink && currentLink.tagName === 'LI') {
-                        currentLink.querySelector('a').classList.add('active');
-                    }
-
-                    showPage(link.getAttribute('data-page'));
-                    sidebar.classList.remove('active');
+                    handleNavLinkClick(link);
                 });
             });
 
@@ -316,11 +347,11 @@
                 e.preventDefault();
                 navLinks.forEach(item => item.classList.remove('active'));
                 showPage('profile');
-                sidebar.classList.remove('active');
+                navDropdown.classList.remove('active');
             });
 
             menuToggle.addEventListener('click', () => {
-                sidebar.classList.toggle('active');
+                navDropdown.classList.toggle('active');
             });
 
             const calendarGrid = document.querySelector('.calendar-grid');
@@ -390,7 +421,7 @@
                 renderCalendar();
             });
 
-            showPage('dashboard');
+            showPage('profile');
             renderCalendar();
         });
     </script>
