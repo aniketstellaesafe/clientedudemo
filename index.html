@@ -5,167 +5,550 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adult Content Site - 18+ Only</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(to bottom, #000, #333);
-            color: #fff;
+        * {
             margin: 0;
             padding: 0;
-            text-align: center;
+            box-sizing: border-box;
         }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #1a0a1e, #2d0a3d, #1a0a1e, #0a0a1a);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            z-index: -1;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Floating particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 20, 147, 0.6);
+            border-radius: 50%;
+            animation: float 20s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) translateX(100px); opacity: 0; }
+        }
+
+        /* Age Gate */
         .age-gate {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0,0.95);
+            background: rgba(0,0,0,0.98);
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 1000;
+            backdrop-filter: blur(10px);
         }
+
         .age-gate-content {
-            background: #222;
-            padding: 30px;
-            border-radius: 15px;
-            max-width: 500px;
-            box-shadow: 0 0 20px rgba(255,0,0,0.5);
+            background: linear-gradient(135deg, #1a1a2e 0%, #2d1b3d 100%);
+            padding: 50px 40px;
+            border-radius: 20px;
+            max-width: 550px;
+            box-shadow: 0 20px 60px rgba(255, 20, 147, 0.4),
+                        0 0 100px rgba(138, 43, 226, 0.3);
+            animation: fadeInScale 0.5s ease-out;
+            border: 2px solid rgba(255, 20, 147, 0.3);
+            position: relative;
+            overflow: hidden;
         }
+
+        .age-gate-content::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 20, 147, 0.1), transparent);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .age-gate-content h2 {
+            color: #ff1493;
+            font-size: 32px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(255, 20, 147, 0.8);
+            position: relative;
+            z-index: 1;
+        }
+
+        .age-gate-content p {
+            line-height: 1.8;
+            margin-bottom: 30px;
+            color: #ddd;
+            position: relative;
+            z-index: 1;
+        }
+
         button {
-            background: #ff1493;
+            background: linear-gradient(135deg, #ff1493, #c71585);
             color: #fff;
             border: none;
-            padding: 15px 30px;
+            padding: 18px 40px;
             margin: 10px;
             cursor: pointer;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: background 0.3s;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 20, 147, 0.4);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
         }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
         button:hover {
-            background: #ff69b4;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(255, 20, 147, 0.6);
         }
+
+        button:active {
+            transform: translateY(-1px);
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, rgba(26, 26, 46, 0.9), rgba(45, 27, 61, 0.9));
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid rgba(255, 20, 147, 0.3);
+            animation: slideDown 0.5s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .warning {
+            background: linear-gradient(135deg, #ff0000, #cc0000);
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 1200px;
+            border-radius: 10px;
+            font-weight: bold;
+            box-shadow: 0 4px 20px rgba(255, 0, 0, 0.4);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 4px 20px rgba(255, 0, 0, 0.4); }
+            50% { box-shadow: 0 4px 30px rgba(255, 0, 0, 0.7); }
+        }
+
+        h1 {
+            color: #ff1493;
+            text-shadow: 0 0 30px rgba(255, 20, 147, 0.8);
+            font-size: 48px;
+            margin: 30px 0;
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { text-shadow: 0 0 20px rgba(255, 20, 147, 0.8); }
+            50% { text-shadow: 0 0 40px rgba(255, 20, 147, 1), 0 0 60px rgba(255, 20, 147, 0.6); }
+        }
+
+        /* Categories Grid */
         .categories {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-            padding: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            padding: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
         }
+
         .category {
-            background: rgba(0,0,0,0.7);
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(255,20,147,0.3);
-            transition: transform 0.3s;
+            background: linear-gradient(135deg, rgba(26, 26, 46, 0.8), rgba(45, 27, 61, 0.8));
+            padding: 0;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(255, 20, 147, 0.3);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 2px solid rgba(255, 20, 147, 0.2);
+            overflow: hidden;
+            position: relative;
+            animation: fadeInUp 0.6s ease-out backwards;
         }
+
+        .category:nth-child(1) { animation-delay: 0.1s; }
+        .category:nth-child(2) { animation-delay: 0.2s; }
+        .category:nth-child(3) { animation-delay: 0.3s; }
+        .category:nth-child(4) { animation-delay: 0.4s; }
+        .category:nth-child(5) { animation-delay: 0.5s; }
+        .category:nth-child(6) { animation-delay: 0.6s; }
+        .category:nth-child(7) { animation-delay: 0.7s; }
+        .category:nth-child(8) { animation-delay: 0.8s; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .category::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 20, 147, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .category:hover::before {
+            left: 100%;
+        }
+
         .category:hover {
-            transform: scale(1.05);
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 15px 50px rgba(255, 20, 147, 0.6),
+                        0 0 50px rgba(138, 43, 226, 0.4);
+            border-color: rgba(255, 20, 147, 0.6);
         }
+
         .category img {
             width: 100%;
-            height: 150px;
+            height: 200px;
             object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 10px;
+            transition: transform 0.5s ease;
         }
+
+        .category:hover img {
+            transform: scale(1.1);
+        }
+
+        .category-content {
+            padding: 20px;
+        }
+
+        .category h3 {
+            color: #ff69b4;
+            margin: 15px 0 10px 0;
+            font-size: 24px;
+            text-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
+        }
+
         a {
             color: #ff69b4;
             text-decoration: none;
             font-weight: bold;
+            display: inline-block;
+            margin: 5px 10px 5px 0;
+            padding: 8px 15px;
+            background: rgba(255, 20, 147, 0.1);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 20, 147, 0.3);
         }
+
         a:hover {
-            text-decoration: underline;
-            color: #ff1493;
+            background: rgba(255, 20, 147, 0.3);
+            transform: translateX(5px);
+            box-shadow: 0 4px 15px rgba(255, 20, 147, 0.4);
         }
-        .warning {
-            background: linear-gradient(to right, #ff0000, #cc0000);
-            padding: 15px;
-            margin: 20px;
-            border-radius: 5px;
-            font-weight: bold;
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, rgba(26, 26, 46, 0.9), rgba(45, 27, 61, 0.9));
+            padding: 40px 20px;
+            margin-top: 60px;
+            border-top: 2px solid rgba(255, 20, 147, 0.3);
         }
-        h1 {
-            color: #ff1493;
-            text-shadow: 2px 2px 4px #000;
+
+        footer p {
+            max-width: 1200px;
+            margin: 15px auto;
+            line-height: 1.8;
+            color: #ddd;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 32px;
+            }
+
+            .categories {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+
+            .age-gate-content {
+                margin: 20px;
+                padding: 30px 20px;
+            }
+        }
+
+        /* Loading animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 20, 147, 0.3);
+            border-radius: 50%;
+            border-top-color: #ff1493;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
+    <!-- Floating Particles -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Age Gate -->
     <div id="ageGate" class="age-gate">
         <div class="age-gate-content">
-            <h2>Age Verification Required</h2>
+            <h2>⚠️ Age Verification Required</h2>
             <p>This website contains adult content intended for viewers aged 18 and above only. By entering, you confirm that you are 18 years or older and agree to view such material.</p>
-            <button onclick="confirmAge()">I am 18+ and Agree</button>
-            <button onclick="window.location.href='https://www.google.com'">Exit</button>
+            <button onclick="confirmAge()">✓ I am 18+ and Agree</button>
+            <button onclick="window.location.href='https://www.google.com'">✗ Exit</button>
         </div>
     </div>
 
+    <!-- Main Content -->
     <div id="mainContent" style="display: none;">
-        <div class="warning">
-            <strong>WARNING: Adult Content Ahead. 18+ Only. Proceed at your own discretion.</strong>
-        </div>
-        <h1>Adult Content Categories</h1>
-        <p>Explore popular categories with thumbnails for visual appeal. Links lead to external sites.</p>
+        <header>
+            <div class="warning">
+                <strong>⚠️ WARNING: Adult Content Ahead. 18+ Only. Proceed at your own discretion.</strong>
+            </div>
+        </header>
+
+        <h1>🔥 Adult Content Categories</h1>
+        <p style="text-align: center; color: #ddd; margin-bottom: 30px;">Explore popular categories with thumbnails for visual appeal. Links lead to external sites.</p>
+
         <div class="categories">
             <div class="category">
-                <img src="https://via.placeholder.com/250x150/ff69b4/000?text=MILF" alt="MILF Thumbnail">
-                <h3>MILF</h3>
-                <a href="https://www.pornhub.com/video/search?search=milf" target="_blank">View on Pornhub</a><br>
-                <a href="https://www.xvideos.com/tags/milf" target="_blank">View on XVideos</a>
+                <img src="https://via.placeholder.com/280x200/ff69b4/000?text=MILF" alt="MILF Thumbnail">
+                <div class="category-content">
+                    <h3>MILF</h3>
+                    <a href="https://www.pornhub.com/video/search?search=milf" target="_blank">View on Pornhub</a>
+                    <a href="https://www.xvideos.com/tags/milf" target="_blank">View on XVideos</a>
+                </div>
             </div>
+
             <div class="category">
-                <img src="https://via.placeholder.com/250x150/ff1493/000?text=Anal" alt="Anal Thumbnail">
-                <h3>Anal</h3>
-                <a href="https://www.pornhub.com/video/search?search=anal" target="_blank">View on Pornhub</a><br>
-                <a href="https://www.xvideos.com/tags/anal" target="_blank">View on XVideos</a>
+                <img src="https://via.placeholder.com/280x200/ff1493/000?text=Anal" alt="Anal Thumbnail">
+                <div class="category-content">
+                    <h3>Anal</h3>
+                    <a href="https://www.pornhub.com/video/search?search=anal" target="_blank">View on Pornhub</a>
+                    <a href="https://www.xvideos.com/tags/anal" target="_blank">View on XVideos</a>
+                </div>
             </div>
+
             <div class="category">
-                <img src="https://via.placeholder.com/250x150/ff69b4/000?text=Lesbian" alt="Lesbian Thumbnail">
-                <h3>Lesbian</h3>
-                <a href="https://www.pornhub.com/video/search?search=lesbian" target="_blank">View on Pornhub</a><br>
-                <a href="https://www.xvideos.com/tags/lesbian" target="_blank">View on XVideos</a>
+                <img src="https://via.placeholder.com/280x200/ff69b4/000?text=Lesbian" alt="Lesbian Thumbnail">
+                <div class="category-content">
+                    <h3>Lesbian</h3>
+                    <a href="https://www.pornhub.com/video/search?search=lesbian" target="_blank">View on Pornhub</a>
+                    <a href="https://www.xvideos.com/tags/lesbian" target="_blank">View on XVideos</a>
+                </div>
             </div>
+
             <div class="category">
-                <img src="https://via.placeholder.com/250x150/ff1493/000?text=Hentai" alt="Hentai Thumbnail">
-                <h3>Hentai</h3>
-                <a href="https://www.pornhub.com/video/search?search=hentai" target="_blank">View on Pornhub</a><br>
-                <a href="https://www.xvideos.com/tags/hentai" target="_blank">View on XVideos</a>
+                <img src="https://via.placeholder.com/280x200/ff1493/000?text=Hentai" alt="Hentai Thumbnail">
+                <div class="category-content">
+                    <h3>Hentai</h3>
+                    <a href="https://www.pornhub.com/video/search?search=hentai" target="_blank">View on Pornhub</a>
+                    <a href="https://www.xvideos.com/tags/hentai" target="_blank">View on XVideos</a>
+                </div>
             </div>
+
             <div class="category">
-                <img src="https://via.placeholder.com/250x150/ff69b4/000?text=BBW" alt="BBW Thumbnail">
-                <h3>BBW</h3>
-                <a href="https://www.pornhub.com/video/search?search=bbw" target="_blank">View on Pornhub</a><br>
-                <a href="https://www.xvideos.com/tags/bbw" target="_blank">View on XVideos</a>
+                <img src="https://via.placeholder.com/280x200/ff69b4/000?text=BBW" alt="BBW Thumbnail">
+                <div class="category-content">
+                    <h3>BBW</h3>
+                    <a href="https://www.pornhub.com/video/search?search=bbw" target="_blank">View on Pornhub</a>
+                    <a href="https://www.xvideos.com/tags/bbw" target="_blank">View on XVideos</a>
+                </div>
             </div>
+
             <div class="category">
-                <img src="https://via.placeholder.com/250x150/ff1493/000?text=Ebony" alt="Ebony Thumbnail">
-                <h3>Ebony</h3>
-                <a href="https://www.pornhub.com/video/search?search=ebony" target="_blank">View on Pornhub</a><br>
-                <a href="https://www.xvideos.com/tags/ebony" target="_blank">View on XVideos</a>
+                <img src="https://via.placeholder.com/280x200/ff1493/000?text=Ebony" alt="Ebony Thumbnail">
+                <div class="category-content">
+                    <h3>Ebony</h3>
+                    <a href="https://www.pornhub.com/video/search?search=ebony" target="_blank">View on Pornhub</a>
+                    <a href="https://www.xvideos.com/tags/ebony" target="_blank">View on XVideos</a>
+                </div>
             </div>
+
             <div class="category">
-                <img src="https://via.placeholder.com/250x150/ff69b4/000?text=Mature" alt="Mature Thumbnail">
-                <h3>Mature</h3>
-                <a href="https://www.pornhub.com/video/search?search=mature" target="_blank">View on Pornhub</a><br>
-                <a href="https://www.xvideos.com/tags/mature" target="_blank">View on XVideos</a>
+                <img src="https://via.placeholder.com/280x200/ff69b4/000?text=Mature" alt="Mature Thumbnail">
+                <div class="category-content">
+                    <h3>Mature</h3>
+                    <a href="https://www.pornhub.com/video/search?search=mature" target="_blank">View on Pornhub</a>
+                    <a href="https://www.xvideos.com/tags/mature" target="_blank">View on XVideos</a>
+                </div>
             </div>
+
             <div class="category">
-                <img src="https://via.placeholder.com/250x150/ff1493/000?text=Japanese" alt="Japanese Thumbnail">
-                <h3>Japanese</h3>
-                <a href="https://www.pornhub.com/video/search?search=japanese" target="_blank">View on Pornhub</a><br>
-                <a href="https://www.xvideos.com/tags/japanese" target="_blank">View on XVideos</a>
+                <img src="https://via.placeholder.com/280x200/ff1493/000?text=Japanese" alt="Japanese Thumbnail">
+                <div class="category-content">
+                    <h3>Japanese</h3>
+                    <a href="https://www.pornhub.com/video/search?search=japanese" target="_blank">View on Pornhub</a>
+                    <a href="https://www.xvideos.com/tags/japanese" target="_blank">View on XVideos</a>
+                </div>
             </div>
         </div>
-        <p>Popular sites: <a href="https://www.pornhub.com" target="_blank">Pornhub</a>, <a href="https://www.xvideos.com" target="_blank">XVideos</a>, <a href="https://xhamster.com" target="_blank">xHamster</a>, <a href="https://www.xnxx.com" target="_blank">XNXX</a>.</p>
-        <p>Note: Thumbnails are placeholders for attractiveness; actual content on external sites. No videos embedded due to site policies. Ensure compliance with local laws. This site does not host content.</p>
+
+        <footer>
+            <p><strong>Popular sites:</strong> 
+                <a href="https://www.pornhub.com" target="_blank">Pornhub</a>
+                <a href="https://www.xvideos.com" target="_blank">XVideos</a>
+                <a href="https://xhamster.com" target="_blank">xHamster</a>
+                <a href="https://www.xnxx.com" target="_blank">XNXX</a>
+            </p>
+            <p><strong>Note:</strong> Thumbnails are placeholders for attractiveness; actual content on external sites. No videos embedded due to site policies. Ensure compliance with local laws. This site does not host content.</p>
+        </footer>
     </div>
 
     <script>
-        function confirmAge() {
-            document.getElementById('ageGate').style.display = 'none';
-            document.getElementById('mainContent').style.display = 'block';
+        // Create floating particles
+        function createParticles() {
+            const container = document.getElementById('particles');
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 20 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
+                container.appendChild(particle);
+            }
         }
+
+        // Confirm age function
+        function confirmAge() {
+            const ageGate = document.getElementById('ageGate');
+            const mainContent = document.getElementById('mainContent');
+            
+            ageGate.style.animation = 'fadeOut 0.5s ease-out';
+            setTimeout(() => {
+                ageGate.style.display = 'none';
+                mainContent.style.display = 'block';
+            }, 500);
+        }
+
+        // Fade out animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeOut {
+                to {
+                    opacity: 0;
+                    transform: scale(0.8);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Initialize particles
+        createParticles();
+
+        // Add hover effect to categories
+        document.addEventListener('DOMContentLoaded', function() {
+            const categories = document.querySelectorAll('.category');
+            categories.forEach(category => {
+                category.addEventListener('mouseenter', function() {
+                    this.style.zIndex = '10';
+                });
+                category.addEventListener('mouseleave', function() {
+                    this.style.zIndex = '1';
+                });
+            });
+        });
     </script>
 </body>
 </html>
