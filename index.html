@@ -302,6 +302,7 @@
             height: 200px;
             object-fit: cover;
             transition: transform 0.5s ease;
+            background-color: #333; /* Fallback if image fails */
         }
 
         .category:hover img {
@@ -384,6 +385,17 @@
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
+
+        /* Fallback for image error */
+        .category img.error {
+            background-color: #ff1493;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: bold;
+            font-size: 18px;
+        }
     </style>
 </head>
 <body>
@@ -413,7 +425,7 @@
 
         <div class="categories">
             <div class="category">
-                <img src="https://via.placeholder.com/280x200/ff69b4/000?text=MILF" alt="MILF Thumbnail">
+                <img src="https://picsum.photos/280/200?random=1" alt="MILF Thumbnail" onerror="this.classList.add('error'); this.src=''; this.innerHTML='MILF'">
                 <div class="category-content">
                     <h3>MILF</h3>
                     <a href="https://www.pornhub.com/video/search?search=milf" target="_blank">View on Pornhub</a>
@@ -422,7 +434,7 @@
             </div>
 
             <div class="category">
-                <img src="https://via.placeholder.com/280x200/ff1493/000?text=Anal" alt="Anal Thumbnail">
+                <img src="https://picsum.photos/280/200?random=2" alt="Anal Thumbnail" onerror="this.classList.add('error'); this.src=''; this.innerHTML='Anal'">
                 <div class="category-content">
                     <h3>Anal</h3>
                     <a href="https://www.pornhub.com/video/search?search=anal" target="_blank">View on Pornhub</a>
@@ -431,7 +443,7 @@
             </div>
 
             <div class="category">
-                <img src="https://via.placeholder.com/280x200/ff69b4/000?text=Lesbian" alt="Lesbian Thumbnail">
+                <img src="https://picsum.photos/280/200?random=3" alt="Lesbian Thumbnail" onerror="this.classList.add('error'); this.src=''; this.innerHTML='Lesbian'">
                 <div class="category-content">
                     <h3>Lesbian</h3>
                     <a href="https://www.pornhub.com/video/search?search=lesbian" target="_blank">View on Pornhub</a>
@@ -440,7 +452,7 @@
             </div>
 
             <div class="category">
-                <img src="https://via.placeholder.com/280x200/ff1493/000?text=Hentai" alt="Hentai Thumbnail">
+                <img src="https://picsum.photos/280/200?random=4" alt="Hentai Thumbnail" onerror="this.classList.add('error'); this.src=''; this.innerHTML='Hentai'">
                 <div class="category-content">
                     <h3>Hentai</h3>
                     <a href="https://www.pornhub.com/video/search?search=hentai" target="_blank">View on Pornhub</a>
@@ -449,7 +461,7 @@
             </div>
 
             <div class="category">
-                <img src="https://via.placeholder.com/280x200/ff69b4/000?text=BBW" alt="BBW Thumbnail">
+                <img src="https://picsum.photos/280/200?random=5" alt="BBW Thumbnail" onerror="this.classList.add('error'); this.src=''; this.innerHTML='BBW'">
                 <div class="category-content">
                     <h3>BBW</h3>
                     <a href="https://www.pornhub.com/video/search?search=bbw" target="_blank">View on Pornhub</a>
@@ -458,7 +470,7 @@
             </div>
 
             <div class="category">
-                <img src="https://via.placeholder.com/280x200/ff1493/000?text=Ebony" alt="Ebony Thumbnail">
+                <img src="https://picsum.photos/280/200?random=6" alt="Ebony Thumbnail" onerror="this.classList.add('error'); this.src=''; this.innerHTML='Ebony'">
                 <div class="category-content">
                     <h3>Ebony</h3>
                     <a href="https://www.pornhub.com/video/search?search=ebony" target="_blank">View on Pornhub</a>
@@ -467,7 +479,7 @@
             </div>
 
             <div class="category">
-                <img src="https://via.placeholder.com/280x200/ff69b4/000?text=Mature" alt="Mature Thumbnail">
+                <img src="https://picsum.photos/280/200?random=7" alt="Mature Thumbnail" onerror="this.classList.add('error'); this.src=''; this.innerHTML='Mature'">
                 <div class="category-content">
                     <h3>Mature</h3>
                     <a href="https://www.pornhub.com/video/search?search=mature" target="_blank">View on Pornhub</a>
@@ -476,7 +488,7 @@
             </div>
 
             <div class="category">
-                <img src="https://via.placeholder.com/280x200/ff1493/000?text=Japanese" alt="Japanese Thumbnail">
+                <img src="https://picsum.photos/280/200?random=8" alt="Japanese Thumbnail" onerror="this.classList.add('error'); this.src=''; this.innerHTML='Japanese'">
                 <div class="category-content">
                     <h3>Japanese</h3>
                     <a href="https://www.pornhub.com/video/search?search=japanese" target="_blank">View on Pornhub</a>
@@ -492,7 +504,7 @@
                 <a href="https://xhamster.com" target="_blank">xHamster</a>
                 <a href="https://www.xnxx.com" target="_blank">XNXX</a>
             </p>
-            <p><strong>Note:</strong> Thumbnails are placeholders for attractiveness; actual content on external sites. No videos embedded due to site policies. Ensure compliance with local laws. This site does not host content.</p>
+            <p><strong>Note:</strong>x.com</p>
         </footer>
     </div>
 
